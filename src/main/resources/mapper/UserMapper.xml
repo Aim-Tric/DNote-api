@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.devonte.note.mapper.UserMapper">
+
+    <select id="selectByUsername" resultType="top.devonte.note.entity.NoteUser">
+        select *
+        from d_user du
+        where username = #{username}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true">
+        insert into d_user(username, password, phone, id_number, real_name, nick_name, created, updated)
+            value (#{noteUser.username}, #{noteUser.password}, #{noteUser.phone}, #{noteUser.idNumber},
+                   #{noteUser.realName}, #{noteUser.nickName}, current_timestamp, current_timestamp);
+    </insert>
+
+    <update id="update">
+        update d_user
+        <set>
+            <if test="noteUser.password != null">password=#{noteUser.password},</if>
+            <if test="noteUser.nickName != null">nick_name=#{noteUser.nickName},</if>
+            <if test="true">updated=current_timestamp,</if>
+        </set>
+        where id = #{noteUser.id}
+    </update>
+
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.devonte.note.mapper.FileMapper">
+
+    <select id="page" resultType="top.devonte.note.entity.NoteFile">
+        select *
+        from d_file df
+                 left join d_user_file duf on df.id = duf.file_id
+        where duf.user_id = #{userId}
+          and df.foldered = 0
+        order by df.updated
+        limit ${(page-1)*size},${size}
+    </select>
+
+    <select id="selectOne" resultType="top.devonte.note.entity.NoteFile">
+        select *
+        from d_file df
+        where id = #{id}
+    </select>
+
+    <select id="selectFolders" resultType="top.devonte.note.entity.NoteFile">
+        select *
+        from d_file df,
+             d_user_file duf
+        where duf.user_id = #{userId}
+          and df.foldered = 1
+          and df.id = duf.file_id
+    </select>
+
+    <select id="pageByFolderId" resultType="top.devonte.note.entity.NoteFile">
+        select *
+        from d_file df
+        where df.folder_id = #{folderId}
+        limit ${(page-1)*size},${size}
+    </select>
+
+    <select id="pageByType" resultType="top.devonte.note.entity.NoteFile">
+        select *
+        from d_file df,
+             d_user_file duf
+        where duf.user_id = #{userId}
+          and df.type = 0
+        limit ${(page-1)*size},${size}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into d_file(id, folder_id, title, body, type, topping, foldered, created, updated, topped)
+            value (#{noteFile.id}, #{noteFile.folderId}, #{noteFile.title}, #{noteFile.body}, #{noteFile.type},
+                   #{noteFile.topping}, #{noteFile.foldered}, #{noteFile.created}, #{noteFile.updated},
+                   #{noteFile.topped});
+    </insert>
+
+    <insert id="insertRelation">
+        insert into d_user_file(user_id, file_id) value (#{userId}, #{id});
+    </insert>
+
+    <delete id="delete">
+        delete
+        from d_file
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteRelation">
+        delete
+        from d_user_file
+        where file_id = #{id}
+          and user_id = #{userId}
+    </delete>
+
+    <update id="update" parameterType="top.devonte.note.entity.NoteFile">
+        update d_file
+        <set>
+            <if test="noteFile.folderId != null">folder_id=#{noteFile.folderId},</if>
+            <if test="noteFile.title != null">title=#{noteFile.title},</if>
+            <if test="noteFile.body != null">body=#{noteFile.body},</if>
+            <if test="noteFile.updated != null">updated=#{noteFile.updated},</if>
+            <if test="noteFile.topping != null">topping=#{noteFile.topping},</if>
+            <if test="noteFile.topped != null">topped=#{noteFile.topped},</if>
+        </set>
+        where id = #{noteFile.id}
+    </update>
+
+</mapper>
