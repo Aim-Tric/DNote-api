@@ -122,7 +122,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public PageInfo<NoteFile> getFiles(int page, int userId) {
         PageHelper.startPage(page, 10);
-        List<NoteFile> list = fileMapper.page(userId, page, 10);
+        List<NoteFile> list = fileMapper.list(userId);
         return new PageInfo<>(list);
     }
 }
