@@ -1,8 +1,8 @@
 package top.devonte.note.service;
 
+import top.devonte.note.common.Page;
 import top.devonte.note.entity.NoteFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -46,7 +46,7 @@ public interface FileService {
      *
      * @param id 文件id
      */
-    void deleteFile(Integer id, int user_id);
+    void deleteFile(Integer id, int userId);
 
     /**
      * 创建文件/文件夹
@@ -72,5 +72,10 @@ public interface FileService {
      * @return 缓存路径
      */
     String getCachedFilePath(int id) throws IOException;
+
+    /**
+     * 分页获取文档
+     */
+    Page<NoteFile> getFiles(int page, int userId);
 
 }

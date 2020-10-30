@@ -7,6 +7,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Service;
 import top.devonte.note.common.FileConstants;
+import top.devonte.note.common.Page;
 import top.devonte.note.entity.NoteFile;
 import top.devonte.note.mapper.FileMapper;
 import top.devonte.note.service.FileService;
@@ -115,5 +116,11 @@ public class FileServiceImpl implements FileService {
         out.close();
 
         return path;
+    }
+
+    @Override
+    public Page<NoteFile> getFiles(int page, int userId) {
+        List<NoteFile> data = fileMapper.page(userId, page, 10);
+        return Page.of(data, 10, fileMapper.countByUserId(userId), 10);
     }
 }
