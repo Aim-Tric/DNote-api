@@ -1,5 +1,7 @@
 package top.devonte.note.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -7,7 +9,6 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Service;
 import top.devonte.note.common.FileConstants;
-import top.devonte.note.common.Page;
 import top.devonte.note.entity.NoteFile;
 import top.devonte.note.mapper.FileMapper;
 import top.devonte.note.service.FileService;
@@ -70,7 +71,7 @@ public class FileServiceImpl implements FileService {
         HashOperations<String, Object, Object> ops = redisUtils.getHashOps().getOps();
         int id = noteFile.getId();
         Boolean hasCache = redisUtils.getHashOps().getOps().hasKey(FileConstants.CACHE_FILE_KEY, id);
-        if(hasCache) {
+        if (hasCache) {
             ops.delete(FileConstants.CACHE_FILE_KEY, id);
         }
         fileMapper.update(noteFile);
@@ -119,8 +120,9 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public Page<NoteFile> getFiles(int page, int userId) {
-        List<NoteFile> data = fileMapper.page(userId, page, 10);
-        return Page.of(data, 10, fileMapper.countByUserId(userId), 10);
+    public PageInfo<NoteFile> getFiles(int page, int userId) {
+        PageHelper.startPage(page, 10);
+        List<NoteFile> list = fileMapper.page(userId, page, 10);
+        return new PageInfo<>(list);
     }
 }

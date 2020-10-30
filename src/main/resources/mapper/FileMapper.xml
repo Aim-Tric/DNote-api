@@ -4,17 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.devonte.note.mapper.FileMapper">
 
-    <resultMap id="pageBean" type="top.devonte.note.common.Page">
-        <result column="page" property="page"/>
-        <result column="total" property="total"/>
-        <result column="total_page" property="totalPage"/>
-        <collection property="data" javaType="top.devonte.note.entity.NoteFile">
-
-        </collection>
-    </resultMap>
-
-    <select id="countByUserId" resultType="Integer">
-        select count(*) from d_user_file where user_id = #{userId}
+    <select id="list" resultType="top.devonte.note.entity.NoteFile">
+        select *
+        from d_file df
+                 left join d_user_file duf on df.id = duf.file_id
+        where duf.user_id = #{userId}
+          and df.foldered = 0
+        order by df.updated
     </select>
 
     <select id="page" resultType="top.devonte.note.entity.NoteFile">

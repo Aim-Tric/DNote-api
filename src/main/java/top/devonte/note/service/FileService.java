@@ -1,6 +1,6 @@
 package top.devonte.note.service;
 
-import top.devonte.note.common.Page;
+import com.github.pagehelper.PageInfo;
 import top.devonte.note.entity.NoteFile;
 
 import java.io.IOException;
@@ -75,7 +75,8 @@ public interface FileService {
 
     /**
      * 分页获取文档
+     * @return
      */
-    Page<NoteFile> getFiles(int page, int userId);
+    PageInfo<NoteFile> getFiles(int page, int userId);
 
 }
