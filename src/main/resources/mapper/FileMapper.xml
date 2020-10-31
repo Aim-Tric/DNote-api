@@ -55,10 +55,9 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into d_file(id, folder_id, title, body, type, topping, foldered, created, updated, topped)
-            value (#{noteFile.id}, #{noteFile.folderId}, #{noteFile.title}, #{noteFile.body}, #{noteFile.type},
-                   #{noteFile.topping}, #{noteFile.foldered}, #{noteFile.created}, #{noteFile.updated},
-                   #{noteFile.topped});
+        insert into d_file(folder_id, title, body, type, foldered, created, updated)
+            value (#{noteFile.folderId}, #{noteFile.title}, #{noteFile.body}, #{noteFile.type},
+                   #{noteFile.foldered}, current_timestamp, current_timestamp);
     </insert>
 
     <insert id="insertRelation">
