@@ -1,6 +1,5 @@
 package top.devonte.note.service;
 
-import com.github.pagehelper.PageInfo;
 import top.devonte.note.entity.NoteFile;
 
 import java.io.IOException;
@@ -74,9 +73,9 @@ public interface FileService {
     String getCachedFilePath(int id) throws IOException;
 
     /**
-     * 分页获取文档
+     * 获取某文件夹下的所有数据
      * @return
      */
-    PageInfo<NoteFile> getFiles(int page, int userId);
+    List<NoteFile> getFiles(int userId, int folderId);
 
 }

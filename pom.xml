@@ -10,7 +10,7 @@
     </parent>
     <groupId>top.devonte</groupId>
     <artifactId>note</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
     <name>note</name>
     <description>api for note</description>
 

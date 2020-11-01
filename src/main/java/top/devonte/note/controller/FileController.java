@@ -1,6 +1,5 @@
 package top.devonte.note.controller;
 
-import com.github.pagehelper.PageInfo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import top.devonte.note.common.BaseController;
@@ -33,10 +32,10 @@ public class FileController extends BaseController {
         return ResponseEntity.ok(fileService.getAllFiles(noteUser.getId(), page));
     }
 
-    @GetMapping("/file/p/{page}")
-    public ResponseEntity<PageInfo<NoteFile>> getPageFiles(@PathVariable int page) {
+    @GetMapping("/file/p/{folderId}")
+    public ResponseEntity<List<NoteFile>> getPageFiles(@PathVariable int folderId) {
         NoteUser noteUser = getLoginUser();
-        return ResponseEntity.ok(fileService.getFiles(page, noteUser.getId()));
+        return ResponseEntity.ok(fileService.getFiles(noteUser.getId(), folderId));
     }
 
     @PostMapping("/file")

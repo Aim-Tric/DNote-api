@@ -11,7 +11,7 @@ public interface FileMapper {
 
     List<NoteFile> page(@Param("userId") int userId, @Param("page") int page, @Param("size") int size);
 
-    List<NoteFile> list(@Param("userId") int userId);
+    List<NoteFile> list(@Param("userId") int userId, @Param("folderId") int folderId);
 
     NoteFile selectOne(Integer id);
 

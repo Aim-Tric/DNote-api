@@ -9,7 +9,7 @@
         from d_file df
                  left join d_user_file duf on df.id = duf.file_id
         where duf.user_id = #{userId}
-          and df.foldered = 0
+          and df.folder_id = #{folderId}
         order by df.updated
     </select>
 

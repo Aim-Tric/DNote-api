@@ -1,7 +1,5 @@
 package top.devonte.note.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -120,9 +118,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public PageInfo<NoteFile> getFiles(int page, int userId) {
-        PageHelper.startPage(page, 10);
-        List<NoteFile> list = fileMapper.list(userId);
-        return new PageInfo<>(list);
+    public List<NoteFile> getFiles(int userId, int folderId) {
+        List<NoteFile> list = fileMapper.list(userId, folderId);
+        return list;
     }
 }
