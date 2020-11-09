@@ -1,9 +1,9 @@
 package top.devonte.note.config.security.handler;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import top.devonte.note.common.ApiResult;
 import top.devonte.note.common.AuthConstants;
 import top.devonte.note.entity.NoteUser;
 import top.devonte.note.util.JsonUtils;
@@ -46,7 +46,7 @@ public class NoteAuthenticationSuccessHandler implements AuthenticationSuccessHa
                 JsonUtils.stringify(noteUser),
                 AuthConstants.AN_HOUR);
 
-        ResponseEntity<String> responseEntity = ResponseEntity.ok("登录成功！");
+        ApiResult<String> responseEntity = ApiResult.ok("登录成功！");
 
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(JsonUtils.stringify(responseEntity));

@@ -1,9 +1,9 @@
 package top.devonte.note.config.security.handler;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
+import top.devonte.note.common.ApiResult;
 import top.devonte.note.util.JsonUtils;
 
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ public class NoteAuthenticationFailureHandler implements AuthenticationFailureHa
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
 
-        ResponseEntity<String> responseEntity = ResponseEntity.badRequest().body("登录失败: " + e.getMessage());
+        ApiResult<String> responseEntity = ApiResult.fail("登录失败: " + e.getMessage());
 
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(JsonUtils.stringify(responseEntity));

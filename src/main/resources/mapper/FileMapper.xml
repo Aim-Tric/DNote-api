@@ -13,6 +13,16 @@
         order by df.updated
     </select>
 
+    <select id="listFolder" resultType="top.devonte.note.entity.NoteFile">
+        select *
+        from d_file df
+                 left join d_user_file duf on df.id = duf.file_id
+        where duf.user_id = #{userId}
+          and df.folder_id = #{folderId}
+          and df.foldered = 1
+        order by df.updated
+    </select>
+
     <select id="page" resultType="top.devonte.note.entity.NoteFile">
         select *
         from d_file df

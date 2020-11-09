@@ -30,4 +30,6 @@ public interface FileMapper {
     List<NoteFile> pageByType(@Param("userId") int userId, @Param("page") int page, @Param("size") int size);
 
     void update(@Param("noteFile") NoteFile noteFile);
+
+    List<NoteFile> listFolder(@Param("userId") int userId ,@Param("folderId") int folderId);
 }

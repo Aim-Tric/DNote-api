@@ -1,7 +1,7 @@
 package top.devonte.note.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import top.devonte.note.common.ApiResult;
 import top.devonte.note.common.BaseController;
 import top.devonte.note.entity.NoteFile;
 import top.devonte.note.entity.NoteUser;
@@ -14,64 +14,63 @@ import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 
-@RestController
-public class FileController extends BaseController {
+public class FileControllerOld extends BaseController {
 
     @Resource
     private FileService fileService;
 
     @GetMapping("/file/{fileId}")
-    public ApiResult<NoteFile> getFile(@PathVariable Integer fileId) {
+    public ResponseEntity<NoteFile> getFile(@PathVariable Integer fileId) {
         NoteFile file = fileService.getFile(fileId);
-        return ApiResult.ok(file);
+        return ResponseEntity.ok(file);
     }
 
     @GetMapping("/file/page/{page}")
-    public ApiResult<List<NoteFile>> getFiles(@PathVariable int page) {
+    public ResponseEntity<List<NoteFile>> getFiles(@PathVariable int page) {
         NoteUser noteUser = getLoginUser();
-        return ApiResult.ok(fileService.getAllFiles(noteUser.getId(), page));
+        return ResponseEntity.ok(fileService.getAllFiles(noteUser.getId(), page));
     }
 
     @GetMapping("/file/p/{folderId}")
-    public ApiResult<List<NoteFile>> getPageFiles(@PathVariable int folderId) {
+    public ResponseEntity<List<NoteFile>> getPageFiles(@PathVariable int folderId) {
         NoteUser noteUser = getLoginUser();
-        return ApiResult.ok(fileService.getFiles(noteUser.getId(), folderId));
+        return ResponseEntity.ok(fileService.getFiles(noteUser.getId(), folderId));
     }
 
     @PostMapping("/file")
-    public ApiResult<NoteFile> createFile(@RequestBody NoteFile file) {
+    public ResponseEntity<NoteFile> createFile(@RequestBody NoteFile file) {
         NoteUser noteUser = getLoginUser();
         NoteFile retFile = fileService.createFile(file, noteUser.getId());
-        return ApiResult.ok(retFile);
+        return ResponseEntity.ok(retFile);
     }
 
     @PutMapping("/file")
-    public ApiResult<String> updateFile(@RequestBody NoteFile file) {
+    public ResponseEntity<String> updateFile(@RequestBody NoteFile file) {
         fileService.updateFile(file);
-        return ApiResult.ok("文档更新成功！");
+        return ResponseEntity.ok("文档更新成功！");
     }
 
     @DeleteMapping("/file/{id}")
-    public ApiResult<String> deleteFile(@PathVariable("id") Integer id) {
+    public ResponseEntity<String> deleteFile(@PathVariable("id") Integer id) {
         NoteUser noteUser = getLoginUser();
         fileService.deleteFile(id, noteUser.getId());
-        return ApiResult.ok("文档删除成功！");
+        return ResponseEntity.ok("文档删除成功！");
     }
 
     @GetMapping("/folder/{folderId}/page/{page}")
-    public ApiResult<List<NoteFile>> getFolderFiles(@PathVariable Integer folderId, @PathVariable int page) {
-        return ApiResult.ok(fileService.getFolderFiles(folderId, page));
+    public ResponseEntity<List<NoteFile>> getFolderFiles(@PathVariable Integer folderId, @PathVariable int page) {
+        return ResponseEntity.ok(fileService.getFolderFiles(folderId, page));
     }
 
     @GetMapping("/folders/{folderId}")
-    public ApiResult<List<NoteFile>> getFolders(@PathVariable Integer folderId) {
-        return ApiResult.ok(fileService.getFolder(getLoginUser().getId(), folderId));
+    public ResponseEntity<List<NoteFile>> getFolders(@PathVariable Integer folderId) {
+        return ResponseEntity.ok(fileService.getFolder(getLoginUser().getId(), folderId));
     }
 
     @GetMapping("/folder/{page}")
-    public ApiResult<List<NoteFile>> getFolders(@PathVariable int page) {
+    public ResponseEntity<List<NoteFile>> getFolders(@PathVariable int page) {
         NoteUser noteUser = getLoginUser();
-        return ApiResult.ok(fileService.getFolders(noteUser.getId(), page));
+        return ResponseEntity.ok(fileService.getFolders(noteUser.getId(), page));
     }
 
     @GetMapping("/file/download/{id}")
@@ -103,12 +102,12 @@ public class FileController extends BaseController {
     }
 
     @GetMapping("/file/topping/{id}")
-    public ApiResult<String> toppingFile(@PathVariable int id) {
+    public ResponseEntity<String> toppingFile(@PathVariable int id) {
         NoteFile file = new NoteFile();
         file.setId(id);
         file.setTopped(new Date());
         file.setTopping(true);
         fileService.updateFile(file);
-        return ApiResult.ok("操作成功");
+        return ResponseEntity.ok("操作成功");
     }
 }

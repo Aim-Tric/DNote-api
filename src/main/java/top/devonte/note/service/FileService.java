@@ -78,4 +78,9 @@ public interface FileService {
      */
     List<NoteFile> getFiles(int userId, int folderId);
 
+    /**
+     * 获取某个文件夹下的所有文件夹
+     */
+    List<NoteFile> getFolder(int userId, int folderId);
+
 }

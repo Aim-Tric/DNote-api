@@ -103,11 +103,10 @@ public class FileServiceImpl implements FileService {
         for (String s : body.split("(\\[\\(br\\)])")) {
             XWPFParagraph firstParagraph = document.createParagraph();
             firstParagraph.setAlignment(ParagraphAlignment.LEFT);
-            //添加内容
             XWPFRun run = firstParagraph.createRun();
             run.setText(s);
             run.setBold(false);
-            run.setFontSize(12);//字体大小
+            run.setFontSize(12);
             run.setFontFamily("宋体");
         }
         FileOutputStream out = new FileOutputStream(f);
@@ -119,7 +118,11 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public List<NoteFile> getFiles(int userId, int folderId) {
-        List<NoteFile> list = fileMapper.list(userId, folderId);
-        return list;
+        return fileMapper.list(userId, folderId);
+    }
+
+    @Override
+    public List<NoteFile> getFolder(int userId, int folderId) {
+        return fileMapper.listFolder(userId, folderId);
     }
 }

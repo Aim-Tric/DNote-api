@@ -7,7 +7,6 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import top.devonte.note.common.FileConstants;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -39,7 +38,7 @@ public class PoiTest {
         run.setFontFamily("宋体");
         run.addBreak();//添加一个回车空行
 
-        FileOutputStream out = new FileOutputStream(FileConstants.CACHE_FILE_LOCAL_PATH + "test.docx");
+        FileOutputStream out = new FileOutputStream("./download/test.docx");
         document.write(out);
         out.close();
     }

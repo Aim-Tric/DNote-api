@@ -5,19 +5,19 @@
 <mapper namespace="top.devonte.note.mapper.AnalyticMapper">
 
     <select id="analyticUserData" resultType="java.util.HashMap">
-        select (select count(df.id)
-                from d_file df,
-                     d_user_file duf
-                where user_id = #{userId}
-                  and df.id = duf.file_id
-                  and df.foldered = FALSE)                                        as files,
-               (select count(df.id)
-                from d_file df,
-                     d_user_file duf
-                where user_id = #{userId}
-                  and df.id = duf.file_id
-                  and df.foldered = TRUE)                                         as folders,
-               (select DATEDIFF(now(), created) from d_user where id = #{userId}) as days
+        select ifnull((select count(df.id)
+                       from d_file df,
+                            d_user_file duf
+                       where user_id = #{userId}
+                         and df.id = duf.file_id
+                         and df.foldered = FALSE), 0)                             as files,
+               ifnull((select count(df.id)
+                       from d_file df,
+                            d_user_file duf
+                       where user_id = #{userId}
+                         and df.id = duf.file_id
+                         and df.foldered = TRUE), 0)                              as folders,
+               ifnull((select DATEDIFF(now(), created) from d_user where id = #{userId}), 0) as days
     </select>
 
 </mapper>
